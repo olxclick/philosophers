@@ -6,7 +6,7 @@
 /*   By: jbranco- <jbranco-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:37:50 by jbranco-          #+#    #+#             */
-/*   Updated: 2023/05/25 15:43:35 by jbranco-         ###   ########.fr       */
+/*   Updated: 2023/06/05 14:29:42 by jbranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ void	check_death(t_philo *philo)
 	while (1)
 	{
 		i = -1;
-		pthread_mutex_lock(&args->locker);
 		while (++i < args->n_philo)
 		{
+			pthread_mutex_lock(&args->locker);
 			if ((time_ms() - philo[i].last_meal) > philo[i].args->die_time)
 			{
 				pthread_mutex_unlock(&args->locker);
-				dead_printing(philo);
+				dead_printing(philo, philo[i].id);
 				return ;
 			}
 			if ((args->satisfied == args->n_philo) && args->eating_number)
@@ -85,12 +85,12 @@ void	check_death(t_philo *philo)
 				print_satisfied(philo);
 				return ;
 			}
+			pthread_mutex_unlock(&args->locker);
 		}
-		pthread_mutex_unlock(&args->locker);
 	}
 }
 
-void	dead_printing(t_philo *philo)
+void	dead_printing(t_philo *philo, size_t id)
 {
 	pthread_mutex_lock(&philo->args->locker);
 	if (!philo->args->printed)
@@ -98,7 +98,7 @@ void	dead_printing(t_philo *philo)
 		philo->args->printed = 1;
 		pthread_mutex_lock(&philo->args->print_locker);
 		printf("%ld ms %ld %s\n", (time_ms() - philo->args->start_time),
-			philo->id, DIED);
+			id, DIED);
 		pthread_mutex_unlock(&philo->args->print_locker);
 	}
 	pthread_mutex_unlock(&philo->args->locker);

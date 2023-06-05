@@ -6,7 +6,7 @@
 /*   By: jbranco- <jbranco-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 14:27:00 by jbranco-          #+#    #+#             */
-/*   Updated: 2023/05/25 15:34:55 by jbranco-         ###   ########.fr       */
+/*   Updated: 2023/06/05 14:34:10 by jbranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void				print_sleeping(t_philo *philo);
 void				print_fork(t_philo *philo);
 void				print_thinking(t_philo *philo);
 void				check_death(t_philo *philo);
-void				dead_printing(t_philo *philo);
+void				dead_printing(t_philo *philo, size_t id);
 void				print_satisfied(t_philo *philo);
 suseconds_t			time_ms(void);
 
