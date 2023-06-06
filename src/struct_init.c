@@ -6,7 +6,7 @@
 /*   By: jbranco- <jbranco-@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 16:15:04 by jbranco-          #+#    #+#             */
-/*   Updated: 2023/06/05 14:37:31 by jbranco-         ###   ########.fr       */
+/*   Updated: 2023/06/06 15:23:52 by jbranco-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,15 @@ int	init_args(t_args *args, char **argv)
 	args->die_time = ft_atoi(argv[2]);
 	args->eat_time = ft_atoi(argv[3]);
 	args->sleep_time = ft_atoi(argv[4]);
-	if (argv[5] && ft_isdigit(argv[5]))
-		args->eating_number = ft_atoi(argv[5]);
-	else
+	if (!argv[5])
 		args->eating_number = 0;
+	else
+	{
+		if (argv[5] && ft_atoi(argv[5]) < 0)
+			return (0);
+		else if (argv[5] && ft_isdigit(argv[5]))
+			args->eating_number = ft_atoi(argv[5]);
+	}
 	args->satisfied = 0;
 	args->printed = 0;
 	args->died = 0;
